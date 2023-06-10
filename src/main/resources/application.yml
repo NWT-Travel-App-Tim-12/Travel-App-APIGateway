@@ -2,16 +2,17 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user/**
-          filters:
-            - AuthenticationFilter
-
         - id: identity-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/auth/**
           filters:
             - AuthenticationFilter
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+          filters:
+            - AuthenticationFilter
+
