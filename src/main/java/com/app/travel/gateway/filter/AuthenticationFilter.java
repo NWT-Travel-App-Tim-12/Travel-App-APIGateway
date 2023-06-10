@@ -1,7 +1,6 @@
 package com.app.travel.gateway.filter;
 
-import com.app.travel.gateway.exceptions.MissingAuthorizationHeaderException;
-import com.app.travel.gateway.exceptions.UnauthorizedException;
+
 import com.app.travel.gateway.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;

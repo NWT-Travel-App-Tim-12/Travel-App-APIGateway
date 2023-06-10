@@ -16,3 +16,14 @@ spring:
           filters:
             - AuthenticationFilter
 
+
+        - id: package-service
+          uri: lb://PACKAGE-SERVICE
+          predicates:
+            - Path=/package/**
+          filters:
+            - AuthenticationFilter
+
+
+
+
