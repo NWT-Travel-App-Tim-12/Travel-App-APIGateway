@@ -18,8 +18,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Autowired
     private RouteValidator validator;
 
-    //    @Autowired
-//    private RestTemplate template;
+        @Autowired
+    private RestTemplate template;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -31,6 +31,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
             if (validator.isSecured.test(exchange.getRequest())) {
+                System.out.println("Route secured");
                 //header contains token or not
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated", null);
@@ -41,11 +42,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     authHeader = authHeader.substring(7);
                 }
                 try {
-//                    //REST call to AUTH service
-//                    template.getForObject("http://IDENTITY-SERVICE//validate?token" + authHeader, String.class);
+                    System.out.println("uso");
+                      //  template.getForObject("http://USER-SERVICE//validate?token" + authHeader, String.class);
                     jwtUtil.validateToken(authHeader);
-
+                    System.out.println("proso");
                 } catch (Exception e) {
+
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated", e);
                 }
             }

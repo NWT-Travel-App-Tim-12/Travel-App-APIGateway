@@ -13,3 +13,5 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/auth/**
+          filters:
+            - AuthenticationFilter
