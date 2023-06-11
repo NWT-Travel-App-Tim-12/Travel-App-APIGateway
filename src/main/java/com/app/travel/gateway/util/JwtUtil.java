@@ -1,5 +1,6 @@
 package com.app.travel.gateway.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -27,5 +28,30 @@ public class JwtUtil {
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String extractRole(String token) {
+        String role;
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            role = claims.get("role").toString();
+        } catch (Exception e) {
+            role = null;
+        }
+        return role;
+    }
+
+
+    private Claims getAllClaimsFromToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            claims = null;
+        }
+        return claims;
     }
 }
